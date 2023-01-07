@@ -1,0 +1,19 @@
+{
+  "name": "server-serial-to-db",
+  "version": "1.0.0",
+  "description": "Servidor para recibir datos de arduino y subirlos a base de datos",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+   
+  },
+  "author": "Lucas Zarate",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  },
+  "dependencies": {
+    "serialport": "^10.5.0"
+  }
+}
