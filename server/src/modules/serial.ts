@@ -1,29 +1,44 @@
 import { SerialPort } from "serialport";
 import { ReadlineParser } from "serialport";
+import { autoDetect } from "@serialport/bindings-cpp";
 import { save } from "./db.js";
+
+const idBoard = "7523";
 
 type DATA_DB = { value: string; date: Date };
 type DB = ({}: DATA_DB) => void;
 
 const connect = (dbFunc: DB) => {
-  const serialport = new SerialPort({ path: "COM5", baudRate: 9600 });
-  const parser = serialport.pipe(new ReadlineParser({ delimiter: "\r\n" }));
+  const port = autoDetect().list();
 
-  serialport.on("error", (err) => {
-    console.log(err);
-    reconnect();
-  });
+  port.then((information) => {
+    let path = "COM5";
+    const [obj] = information;
 
-  serialport.on("close", (err: Error) => {
-    console.log(err);
-    reconnect();
-  });
+    if (obj?.productId === idBoard) {
+      path = obj.path;
+      console.log(`Dispositivo conectado al puerto ${path}`);
+    }
 
-  parser.on("data", (data) => {
-    let date = new Date();
-    let res = { value: data, date };
+    const serialport = new SerialPort({ path, baudRate: 9600 });
+    const parser = serialport.pipe(new ReadlineParser({ delimiter: "\r\n" }));
 
-    dbFunc(res);
+    serialport.on("error", (err) => {
+      console.log(err);
+      reconnect();
+    });
+
+    serialport.on("close", (err: Error) => {
+      console.log(err);
+      reconnect();
+    });
+
+    parser.on("data", (data) => {
+      let date = new Date();
+      let res = { value: data, date };
+
+      dbFunc(res);
+    });
   });
 };
 

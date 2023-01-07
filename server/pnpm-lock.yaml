@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@serialport/bindings-cpp': ^10.8.0
   '@types/node': ^18.11.18
   '@types/serialport': ^8.0.2
   dotenv: ^16.0.3
@@ -11,6 +12,7 @@ specifiers:
   typescript: ^4.9.4
 
 dependencies:
+  '@serialport/bindings-cpp': 10.8.0
   '@types/serialport': 8.0.2
   dotenv: 16.0.3
   mongoose: 6.8.3
