@@ -2,12 +2,12 @@ import mongoose from "mongoose";
 
 interface IVoltage {
   value: string;
-  date: Date;
+  date: number;
 }
 
 const dataSchema = new mongoose.Schema<IVoltage>({
   value: String,
-  date: Date,
+  date: Number
 });
 
 const Voltage  = mongoose.model<IVoltage>("Voltage", dataSchema);

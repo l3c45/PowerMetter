@@ -8,7 +8,7 @@ const idBoard = "7523";
 type DATA_DB = { value: string; date: Date };
 type DB = ({}: DATA_DB) => void;
 
-const connect = (dbFunc: DB) => {
+const connect = () => {
   const port = autoDetect().list();
 
   port.then((information) => {
@@ -34,10 +34,10 @@ const connect = (dbFunc: DB) => {
     });
 
     parser.on("data", (data) => {
-      let date = new Date();
+      let date = new Date().getTime();
       let res = { value: data, date };
 
-      dbFunc(res);
+      save(res);
     });
   });
 };
@@ -46,7 +46,7 @@ const reconnect = () => {
   console.log("Initiate re-connection");
   setTimeout(() => {
     console.log("Reconnecting");
-    connect(save);
+    connect();
   }, 2000);
 };
 
