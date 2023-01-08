@@ -16,10 +16,7 @@ body {
   width: 70px;
 }
 
-#chart {
+#chart , .a ,#about  {
   min-height: 90vh;
 }
 
-#about {
-  min-height: 90vh;
-}
