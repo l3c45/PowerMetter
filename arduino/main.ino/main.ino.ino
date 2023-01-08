@@ -7,9 +7,7 @@ LiquidCrystal lcd(9, 8, 5, 4, 3, 2);
 
 int DELAY_LOOP=2000;
 int randomNumber;
-String p1=",";
-String tension="Tension: ";
-String v=" V";
+
 
 
 void setup() {
@@ -25,7 +23,7 @@ void loop() {
 
  randomNumber=random(200,225);
   // Envia informacion a puerto serial
-  Serial.println(tension+randomNumber+v+p1+"date:"+millis());
+  Serial.println(randomNumber);
 
 
 
