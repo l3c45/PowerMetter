@@ -11,37 +11,46 @@ function App() {
   const [events, setEvents] = useState([]);
   const [data, setData] = useState([]);
 
+
+
+ 
+
+
+
   useEffect(() => {
-    const login = async () => {
+
+
+    const db = async () => {
     
-      // Connect to the database
+
       const mongodb = app?.currentUser?.mongoClient("mongodb-atlas");
       const collection =  mongodb
         ?.db("power-metter")
         .collection("voltages");
-
+  
       //Everytime a change happens in the stream, add it to the list of events
+    
       for await (const change of collection.watch()) {
-        setEvents((events) => [...events, change.fullDocument]);
+       let a=(change)
+       console.log(a)
+       // setEvents((events) => [...events, change.fullDocument]);
       }
+  
+  
+      // const currentTime = new Date().getTime();
+      // const filter = 24 * 60 * 60 * 1000;
+      // const filtered = currentTime - filter;
+  
+    //  const  list=await collection
+    //     .find({ date: { $gt: filtered } }, { sort: { _id: -1 } });
+  
+    //     setData(list)
+  
+  
+  
     };
-
-    const listUser = async () => {
-      const mongodb = app?.currentUser?.mongoClient("mongodb-atlas");
-      const currentTime = new Date().getTime();
-      const filter = 24 * 60 * 60 * 1000;
-      const filtered = currentTime - filter;
-
-      let list = await mongodb
-        ?.db("power-metter")
-        .collection("voltages")
-        .find({ date: { $gt: filtered } }, { sort: { _id: -1 } });
-
-      setData(list);
-    };
-    listUser();
-    login();
-  }, [app.currentUser]);
+     db()
+  }, []);
 
   return (
     <div>
@@ -60,7 +69,7 @@ function App() {
         {events[0] ? (
           <>
             <div className=" w-75 p-3">
-              <ChartGraphOnline data={events}></ChartGraphOnline>
+              <ChartGraphOnline data={data}></ChartGraphOnline>
             </div>
 
             <div className=" container  d-flex  flex-column  justify-content-center align-items-center">
