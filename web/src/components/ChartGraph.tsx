@@ -1,4 +1,3 @@
-import { months } from "../utils/utils";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,6 +9,10 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import StreamingPlugin from "chartjs-plugin-streaming";
+import "chartjs-plugin-streaming";
+import "chartjs-adapter-moment";
+import type { ChartData, ChartOptions } from "chart.js";
 
 ChartJS.register(
   CategoryScale,
@@ -18,33 +21,39 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  StreamingPlugin
 );
 
-const labels = months({ count: 7 });
-
-const options = {
+const options: ChartOptions<"line"> = {
+  spanGaps: 1000 * 60,
+  elements: {
+    point: {
+      radius: 0,
+    },
+  },
   responsive: true,
   scales: {
     y: {
+      beginAtZero: true,
       ticks: {
         color: "#fff",
-        beginAtZero: true,
         font: {
           size: 16,
         },
       },
     },
     x: {
+      type: "time",
       ticks: {
         color: "#fff",
-        beginAtZero: true,
         font: {
           size: 16,
         },
       },
     },
   },
+
   plugins: {
     legend: {
       labels: {
@@ -57,7 +66,7 @@ const options = {
     },
     title: {
       display: true,
-      text: "Niveles de tension del suministro electrico",
+      text: "Tension del suministro electrico ultima hora",
       color: "#fff",
       font: {
         size: 20,
@@ -66,53 +75,31 @@ const options = {
   },
 };
 
-const data = {
-  labels: labels,
-  datasets: [
-    {
-      label: "Tension ",
-      color: "#fff",
-      data: [65, 59, 80, 81, 56, 55, 40],
-      fill: false,
-      borderColor: "rgb(75, 192, 192)",
-      backgroundColor: "rgba(53, 162, 235, 0.5)",
-      tension: 0.1,
-    },
-  ],
+type Props = {
+  data: {
+    _id: number;
+    value: string;
+    date: number;
+    _v: number;
+  }[];
 };
 
-const ChartGraph = () => {
-  return <Line options={options} data={data}></Line>;
+const ChartGraph = ({ data }: Props) => {
+  const dataSet: ChartData<"line"> = {
+    labels: data.map((item) => +item.date),
+    datasets: [
+      {
+        label: "Tension ",
+        data: data.map((item) => +item.value),
+        fill: false,
+        borderColor: "rgb(75, 192, 192)",
+        borderWidth: 1,
+        tension: 0,
+      },
+    ],
+  };
+
+  return <Line options={options} data={dataSet}></Line>;
 };
 
 export default ChartGraph;
-
-// export const options = {
-//   responsive: true,
-//   interaction: {
-//     mode: 'index' as const,
-//     intersect: false,
-//   },
-//   stacked: false,
-//   plugins: {
-//     title: {
-//       display: true,
-//       text: 'Chart.js Line Chart - Multi Axis',
-//     },
-//   },
-//   scales: {
-//     y: {
-//       type: 'linear' as const,
-//       display: true,
-//       position: 'left' as const,
-//     },
-//     y1: {
-//       type: 'linear' as const,
-//       display: true,
-//       position: 'right' as const,
-//       grid: {
-//         drawOnChartArea: false,
-//       },
-//     },
-//   },
-// };

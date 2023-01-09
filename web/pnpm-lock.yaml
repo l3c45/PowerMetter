@@ -14,7 +14,11 @@ specifiers:
   '@types/react-dom': ^18.0.10
   bootstrap: ^5.2.3
   bootswatch: ^5.2.3
+  bson: ^4.7.1
   chart.js: ^4.1.2
+  chartjs-adapter-moment: ^1.0.1
+  chartjs-plugin-streaming: ^2.0.0
+  moment: ^2.29.4
   react: ^18.2.0
   react-chartjs-2: ^5.1.0
   react-dom: ^18.2.0
@@ -37,7 +41,11 @@ dependencies:
   '@types/react-dom': 18.0.10
   bootstrap: 5.2.3
   bootswatch: 5.2.3
+  bson: 4.7.1
   chart.js: 4.1.2
+  chartjs-adapter-moment: 1.0.1_cxwig3io7aelboy52h2qbyqnwa
+  chartjs-plugin-streaming: 2.0.0_chart.js@4.1.2
+  moment: 2.29.4
   react: 18.2.0
   react-chartjs-2: 5.1.0_mfjxiilvrceiwtanada6fxhije
   react-dom: 18.2.0_react@18.2.0
@@ -3565,6 +3573,24 @@ packages:
     engines: {pnpm: ^7.0.0}
     dependencies:
       '@kurkle/color': 0.3.1
+    dev: false
+
+  /chartjs-adapter-moment/1.0.1_cxwig3io7aelboy52h2qbyqnwa:
+    resolution: {integrity: sha512-Uz+nTX/GxocuqXpGylxK19YG4R3OSVf8326D+HwSTsNw1LgzyIGRo+Qujwro1wy6X+soNSnfj5t2vZ+r6EaDmA==}
+    peerDependencies:
+      chart.js: '>=3.0.0'
+      moment: ^2.10.2
+    dependencies:
+      chart.js: 4.1.2
+      moment: 2.29.4
+    dev: false
+
+  /chartjs-plugin-streaming/2.0.0_chart.js@4.1.2:
+    resolution: {integrity: sha512-oBwHRmovGbPDS1h8PhpttnlKjI6eiJO13v4h+xz+mfbHhIc+iNF9xuMobCIFMKFH7rlVWi5TJAOIxoXyGElYYg==}
+    peerDependencies:
+      chart.js: ^3.0.0
+    dependencies:
+      chart.js: 4.1.2
     dev: false
 
   /check-types/11.2.2:

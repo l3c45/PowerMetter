@@ -1,15 +1,15 @@
 type Props = {
   dataDB: [
     {
-      fullDocument: {
         date: Date;
         value: string;
-      };
     }
   ];
 };
 
 const Table = ({ dataDB }: Props) => {
+
+
   return (
     <table className={`table table-hover`}>
       <thead>
@@ -21,8 +21,8 @@ const Table = ({ dataDB }: Props) => {
       <tbody>
         {dataDB.map((e, i) => (
           <tr key={i} className="default">
-            <td>{JSON.stringify(e.fullDocument.value)}</td>
-            <td>{JSON.stringify(e.fullDocument.date)}</td>
+            <td>{JSON.stringify(e.value)}</td>
+            <td>{JSON.stringify(e.date)}</td>
           </tr>
         ))}
 
