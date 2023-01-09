@@ -8,19 +8,15 @@ import ChartGraphOnline from "./components/ChartGraphOnline";
 
 function App() {
   const app = new Realm.App({ id: "application-0-zqfsi" });
-  const [user, setUser] = useState();
   const [events, setEvents] = useState([]);
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const login = async () => {
-      // Authenticate anonymously
-      const user = await app.logIn(Realm.Credentials.anonymous());
-      setUser(user);
-
+    
       // Connect to the database
       const mongodb = app?.currentUser?.mongoClient("mongodb-atlas");
-      const collection = await mongodb
+      const collection =  mongodb
         ?.db("power-metter")
         .collection("voltages");
 
@@ -33,7 +29,7 @@ function App() {
     const listUser = async () => {
       const mongodb = app?.currentUser?.mongoClient("mongodb-atlas");
       const currentTime = new Date().getTime();
-      const filter = 1 * 60 * 60 * 1000;
+      const filter = 24 * 60 * 60 * 1000;
       const filtered = currentTime - filter;
 
       let list = await mongodb
@@ -45,7 +41,7 @@ function App() {
     };
     listUser();
     login();
-  }, []);
+  }, [app.currentUser]);
 
   return (
     <div>

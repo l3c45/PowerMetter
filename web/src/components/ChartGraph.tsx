@@ -26,6 +26,7 @@ ChartJS.register(
 );
 
 const options: ChartOptions<"line"> = {
+  animation:false,
   spanGaps: 1000 * 60,
   elements: {
     point: {
@@ -66,7 +67,7 @@ const options: ChartOptions<"line"> = {
     },
     title: {
       display: true,
-      text: "Tension del suministro electrico ultima hora",
+      text: "Tension del suministro electrico ultimas 24 horas",
       color: "#fff",
       font: {
         size: 20,
