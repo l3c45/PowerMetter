@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 import About from "./components/About";
 import ChartGraph from "./components/ChartGraph";
 import Header from "./components/Header";
@@ -11,40 +13,35 @@ function App() {
   const [events, setEvents] = useState([]);
   const [data, setData] = useState([]);
 
-
-
- 
-
-
-
   useEffect(() => {
-
 
     const db = async () => {
     
+      const  user = await  app.logIn(Realm.Credentials.anonymous());
 
       const mongodb = app?.currentUser?.mongoClient("mongodb-atlas");
       const collection =  mongodb
         ?.db("power-metter")
         .collection("voltages");
   
-      //Everytime a change happens in the stream, add it to the list of events
     
-      for await (const change of collection.watch()) {
-       let a=(change)
-       console.log(a)
-       // setEvents((events) => [...events, change.fullDocument]);
-      }
+        //Everytime a change happens in the stream, add it to the list of events
+
+      // for await (const change of collection.watch()) {
+      
+     
+      //  setEvents(events => change)
+      // }
   
   
-      // const currentTime = new Date().getTime();
-      // const filter = 24 * 60 * 60 * 1000;
-      // const filtered = currentTime - filter;
+      const currentTime = new Date().getTime();
+      const filter = 24 * 60 * 60 * 1000;
+      const filtered = currentTime - filter;
   
-    //  const  list=await collection
-    //     .find({ date: { $gt: filtered } }, { sort: { _id: -1 } });
+     const  list= await collection
+        .find({ date: { $gt: filtered } }, { sort: { _id: -1 } });
   
-    //     setData(list)
+        setData(list)
   
   
   
@@ -69,7 +66,7 @@ function App() {
         {events[0] ? (
           <>
             <div className=" w-75 p-3">
-              <ChartGraphOnline data={data}></ChartGraphOnline>
+              <ChartGraphOnline data={events}></ChartGraphOnline>
             </div>
 
             <div className=" container  d-flex  flex-column  justify-content-center align-items-center">
