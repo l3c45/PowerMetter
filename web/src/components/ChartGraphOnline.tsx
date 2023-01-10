@@ -27,10 +27,10 @@ ChartJS.register(
 
 type Props = {
   data: {
-    _id: number;
+  
     value: string;
     date: number;
-    _v: number;
+  
   }[];
 };
 

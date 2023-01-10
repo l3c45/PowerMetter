@@ -1,10 +1,10 @@
 type Props = {
-  dataDB: [
+  dataDB: 
     {
-        date: Date;
+        date: number;
         value: string;
-    }
-  ];
+    }[]
+  ;
 };
 
 const Table = ({ dataDB }: Props) => {
@@ -14,15 +14,15 @@ const Table = ({ dataDB }: Props) => {
     <table className={`table table-hover`}>
       <thead>
         <tr className="table-primary">
-          <td>Tension</td>
-          <td>Fecha</td>
+          <td className="text-center">Tensión</td>
+          <td className="text-center">Fecha</td>
         </tr>
       </thead>
       <tbody>
-        {dataDB.map((e, i) => (
+        {dataDB.slice((dataDB.length>10?dataDB.length-10:0),dataDB.length).map((e, i) => (
           <tr key={i} className="default">
-            <td>{JSON.stringify(e.value)}</td>
-            <td>{JSON.stringify(e.date)}</td>
+            <td className="text-center">{e.value}</td>
+            <td className="text-center">{new Date(e.date).toLocaleString().toString()}</td>
           </tr>
         ))}
 

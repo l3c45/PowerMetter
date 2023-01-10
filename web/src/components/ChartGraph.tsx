@@ -39,31 +39,31 @@ type Props = {
 };
 
 type Filter={
- [index: number]:{string:string,hours:number}
+ [index: number]:{string:string,hours:number,offset:number}
   
 }
 
 
 
 const filterObj:Filter={
-  0:{string:"3h",hours:3},
-  1:{string:"24h",hours:24},
-  2:{string:"Semana",hours:168},
-  3:{string:"Mes",hours:720}
+  0:{string:"3h",hours:3,offset:3},
+  1:{string:"24h",hours:24,offset:20},
+  2:{string:"Semana",hours:168,offset:20},
+  3:{string:"Mes",hours:720,offset:20}
 }
 
 const ChartGraph = ({ data ,update}: Props) => {
-const [filter, setFilter] = useState("3h")
+const [filter, setFilter] = useState(filterObj[0])
 
 
 const  updateFilter=(indexFilter:number)=>{
 
-  setFilter(filterObj[indexFilter].string)
+  setFilter(filterObj[indexFilter])
   update(filterObj[indexFilter].hours)
 }
 
 const options: ChartOptions<"line"> = {
-  animation: false,
+ 
   spanGaps: 1000 * 60,
   elements: {
     point: {
@@ -104,21 +104,22 @@ const options: ChartOptions<"line"> = {
     },
     title: {
       display: true,
-      text: `Tension del suministro electrico de ${filter} atras`,
+      text: `Tension del suministro electrico de ${filter.string} atras `,
       color: "#fff",
       font: {
         size: 20,
       },
     },
+     
   },
 };
 
   const dataSet: ChartData<"line"> = {
-    labels: data.map((item) => +item.date),
+    labels: data.map((item) => +item.date).filter((item,i)=>i%filter.offset===0),
     datasets: [
       {
         label: "Tension ",
-        data: data.map((item) => +item.value),
+        data: data.map((item,i) => +item.value).filter((item,i)=>i%filter.offset===0),
         fill: false,
         borderColor: "rgb(75, 192, 192)",
         borderWidth: 1,
@@ -129,6 +130,7 @@ const options: ChartOptions<"line"> = {
 
   return (
     <>
+
       <Line options={options} data={dataSet}></Line>
       <div className="d-flex justify-content-center gap-5 p-4 w ">
       <button onClick={()=>updateFilter(0)} type="button" className="btn btn-primary custom">3h</button>
