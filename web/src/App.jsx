@@ -13,45 +13,35 @@ function App() {
   const [events, setEvents] = useState([]);
   const [data, setData] = useState([]);
 
+  const initialData = async (range=3) => {
+    const mongodb = app?.currentUser?.mongoClient("mongodb-atlas");
+    const collection = mongodb?.db("power-metter").collection("voltages");
+
+    const currentTime = new Date().getTime();
+    const filter = range * 60 * 60 * 1000;
+    const filtered = currentTime - filter;
+
+    const list = await collection.find(
+      { date: { $gt: filtered } },
+      { sort: { _id: -1 } }
+    );
+
+    setData(list);
+  };
+
   useEffect(() => {
-    const  user =   app.logIn(Realm.Credentials.anonymous());
+    const user = app.logIn(Realm.Credentials.anonymous());
 
     const listener = async () => {
-    
-
       const mongodb = app?.currentUser?.mongoClient("mongodb-atlas");
-      const collection =  mongodb
-        ?.db("power-metter")
-        .collection("voltages");
+      const collection = mongodb?.db("power-metter").collection("voltages");
       for await (const change of collection.watch()) {
-       setEvents(events => [...events, change.fullDocument])
+        setEvents((events) => [...events, change.fullDocument]);
       }
-  
     };
 
-
-const initialData=async ()=>{
-  const mongodb = app?.currentUser?.mongoClient("mongodb-atlas");
-      const collection =  mongodb
-        ?.db("power-metter")
-        .collection("voltages");
-  
-  
-  const currentTime = new Date().getTime();
-  const filter = 24 * 60 * 60 * 1000;
-  const filtered = currentTime - filter;
-
- const  list= await collection
-    .find({ date: { $gt: filtered } }, { sort: { _id: -1 } });
-
-    setData(list)
-
-
-}
-
-initialData()
-     listener()
-
+    initialData();
+    listener();
   }, []);
 
   return (
@@ -61,12 +51,14 @@ initialData()
         id={"chart"}
         className="d-flex flex-column justify-content-center align-items-center"
       >
- <div className="container mx-auto">
-          <h1 className="text-danger text-center">----SITIO EN CONSTRUCCIÓN ---</h1>
+        <div className="container mx-auto">
+          <h1 className="text-danger text-center">
+            ----SITIO EN CONSTRUCCIÓN ---
+          </h1>
         </div>
 
         <div className=" w-75 p-3">
-          <ChartGraph data={data}></ChartGraph>
+          <ChartGraph data={data} update={initialData}></ChartGraph>
         </div>
         {events[0] ? (
           <>

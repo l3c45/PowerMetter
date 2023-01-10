@@ -13,6 +13,7 @@ import StreamingPlugin from "chartjs-plugin-streaming";
 import "chartjs-plugin-streaming";
 import "chartjs-adapter-moment";
 import type { ChartData, ChartOptions } from "chart.js";
+import { useState } from "react";
 
 ChartJS.register(
   CategoryScale,
@@ -25,8 +26,44 @@ ChartJS.register(
   StreamingPlugin
 );
 
+
+
+type Props = {
+  data: {
+    _id: number;
+    value: string;
+    date: number;
+    _v: number;
+  }[];
+  update:(range:number)=>void
+};
+
+type Filter={
+ [index: number]:{string:string,hours:number}
+  
+}
+
+
+
+const filterObj:Filter={
+  0:{string:"3h",hours:3},
+  1:{string:"24h",hours:24},
+  2:{string:"Semana",hours:168},
+  3:{string:"Mes",hours:720}
+}
+
+const ChartGraph = ({ data ,update}: Props) => {
+const [filter, setFilter] = useState("3h")
+
+
+const  updateFilter=(indexFilter:number)=>{
+
+  setFilter(filterObj[indexFilter].string)
+  update(filterObj[indexFilter].hours)
+}
+
 const options: ChartOptions<"line"> = {
-  animation:false,
+  animation: false,
   spanGaps: 1000 * 60,
   elements: {
     point: {
@@ -67,7 +104,7 @@ const options: ChartOptions<"line"> = {
     },
     title: {
       display: true,
-      text: "Tension del suministro electrico ultimas 24 horas",
+      text: `Tension del suministro electrico de ${filter} atras`,
       color: "#fff",
       font: {
         size: 20,
@@ -76,16 +113,6 @@ const options: ChartOptions<"line"> = {
   },
 };
 
-type Props = {
-  data: {
-    _id: number;
-    value: string;
-    date: number;
-    _v: number;
-  }[];
-};
-
-const ChartGraph = ({ data }: Props) => {
   const dataSet: ChartData<"line"> = {
     labels: data.map((item) => +item.date),
     datasets: [
@@ -100,7 +127,19 @@ const ChartGraph = ({ data }: Props) => {
     ],
   };
 
-  return <Line options={options} data={dataSet}></Line>;
+  return (
+    <>
+      <Line options={options} data={dataSet}></Line>
+      <div className="d-flex justify-content-center gap-5 p-4 w ">
+      <button onClick={()=>updateFilter(0)} type="button" className="btn btn-primary custom">3h</button>
+      <button onClick={()=>updateFilter(1)} type="button" className="btn btn-primary  custom">24h</button>
+      <button onClick={()=>updateFilter(2)} type="button" className="btn btn-primary custom">Semana</button>
+      <button onClick={()=>updateFilter(3)} type="button" className="btn btn-primary custom">Mes</button>
+
+        
+      </div>
+    </>
+  );
 };
 
 export default ChartGraph;
