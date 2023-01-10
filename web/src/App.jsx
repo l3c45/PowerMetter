@@ -14,39 +14,44 @@ function App() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
+    const  user =   app.logIn(Realm.Credentials.anonymous());
 
-    const db = async () => {
+    const listener = async () => {
     
-      const  user = await  app.logIn(Realm.Credentials.anonymous());
 
       const mongodb = app?.currentUser?.mongoClient("mongodb-atlas");
       const collection =  mongodb
         ?.db("power-metter")
         .collection("voltages");
-  
-    
-        //Everytime a change happens in the stream, add it to the list of events
-
       for await (const change of collection.watch()) {
-      
-     
        setEvents(events => [...events, change.fullDocument])
       }
   
-  
-      const currentTime = new Date().getTime();
-      const filter = 24 * 60 * 60 * 1000;
-      const filtered = currentTime - filter;
-  
-     const  list= await collection
-        .find({ date: { $gt: filtered } }, { sort: { _id: -1 } });
-  
-        setData(list)
-  
-  
-  
     };
-     db()
+
+
+const initialData=async ()=>{
+  const mongodb = app?.currentUser?.mongoClient("mongodb-atlas");
+      const collection =  mongodb
+        ?.db("power-metter")
+        .collection("voltages");
+  
+  
+  const currentTime = new Date().getTime();
+  const filter = 24 * 60 * 60 * 1000;
+  const filtered = currentTime - filter;
+
+ const  list= await collection
+    .find({ date: { $gt: filtered } }, { sort: { _id: -1 } });
+
+    setData(list)
+
+
+}
+
+initialData()
+     listener()
+
   }, []);
 
   return (
