@@ -27,11 +27,11 @@ function App() {
     
         //Everytime a change happens in the stream, add it to the list of events
 
-      // for await (const change of collection.watch()) {
+      for await (const change of collection.watch()) {
       
      
-      //  setEvents(events => change)
-      // }
+       setEvents(events => [...events, change.fullDocument])
+      }
   
   
       const currentTime = new Date().getTime();
