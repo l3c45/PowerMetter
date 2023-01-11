@@ -18,6 +18,7 @@ specifiers:
   chart.js: ^4.1.2
   chartjs-adapter-moment: ^1.0.1
   chartjs-plugin-streaming: ^2.0.0
+  jquery: ^3.6.3
   moment: ^2.29.4
   react: ^18.2.0
   react-chartjs-2: ^5.1.0
@@ -45,6 +46,7 @@ dependencies:
   chart.js: 4.1.2
   chartjs-adapter-moment: 1.0.1_cxwig3io7aelboy52h2qbyqnwa
   chartjs-plugin-streaming: 2.0.0_chart.js@4.1.2
+  jquery: 3.6.3
   moment: 2.29.4
   react: 18.2.0
   react-chartjs-2: 5.1.0_mfjxiilvrceiwtanada6fxhije
@@ -6545,6 +6547,10 @@ packages:
       - supports-color
       - ts-node
       - utf-8-validate
+    dev: false
+
+  /jquery/3.6.3:
+    resolution: {integrity: sha512-bZ5Sy3YzKo9Fyc8wH2iIQK4JImJ6R0GWI9kL1/k7Z91ZBNgkRXE6U0JfHIizZbort8ZunhSI3jw9I6253ahKfg==}
     dev: false
 
   /js-base64/3.7.3:

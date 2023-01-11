@@ -124,7 +124,7 @@ const ChartGraph = ({ data, update }: Props) => {
   };
 
   return (
-    <div className="mt-2">
+    <div id="chart" className="mt-2">
       <Line options={options} data={dataSet}></Line>
       <div className="d-flex justify-content-center gap-4 py-4  ">
         <button

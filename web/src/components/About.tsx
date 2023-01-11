@@ -1,6 +1,6 @@
 const About = () => {
   return (
-    <div className="px-4 my-5">
+    <div id="about" className="px-4 my-5">
       <h4 className="display-6 py-3">Acerca de este Proyecto</h4>
       <p className={"text-justify lead first"}>
         Ademas de desarrollador web , soy técnico electromecánico , lo que me

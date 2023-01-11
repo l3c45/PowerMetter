@@ -1,6 +1,12 @@
+import { useState } from "react";
+
 const Logo = require("../assets/logo.png");
 
 const Header = () => {
+  const [isCollapsed, setIsCollapsed] = useState(true);
+
+  const handleCollapse = () => setIsCollapsed(!isCollapsed);
+
   return (
     <header>
       <nav className="navbar navbar-expand-md navbar-dark bg-primary nav p-0">
@@ -14,13 +20,14 @@ const Header = () => {
             data-bs-toggle="collapse"
             data-bs-target="#navbarColor02"
             aria-controls="navbarColor02"
-            aria-expanded="false"
+            aria-expanded={!isCollapsed ? true : false}
             aria-label="Toggle navigation"
+            onClick={handleCollapse}
           >
             <span className="navbar-toggler-icon"></span>
           </button>
           <div
-            className="collapse navbar-collapse d-flex-md justify-content-end "
+            className={`${isCollapsed ? 'collapse' : ''} navbar-collapse d-flex-md justify-content-end`}
             id="navbarColor01"
           >
             <ul className="navbar-nav  ">
