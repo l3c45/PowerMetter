@@ -27,10 +27,8 @@ ChartJS.register(
 
 type Props = {
   data: {
-  
     value: string;
     date: number;
-  
   }[];
 };
 
@@ -101,9 +99,9 @@ const ChartGraphOnline = ({ data }: Props) => {
   };
 
   return (
-    <>
+    <div className="mb-5">
       <Line options={options} data={dataSet}></Line>
-    </>
+    </div>
   );
 };
 

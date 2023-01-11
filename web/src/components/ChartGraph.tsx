@@ -129,7 +129,7 @@ const options: ChartOptions<"line"> = {
   };
 
   return (
-    <>
+    <div className="mt-2">
 
       <Line options={options} data={dataSet}></Line>
       <div className="d-flex justify-content-center gap-5 p-4 w ">
@@ -140,7 +140,7 @@ const options: ChartOptions<"line"> = {
 
         
       </div>
-    </>
+    </div>
   );
 };
 

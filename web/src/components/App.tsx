@@ -51,34 +51,58 @@ function App() {
   }, []);
 
   return (
-    <div>
-      <Header />
-      <div
-        id={"chart"}
-        className="d-flex flex-column justify-content-center align-items-center"
-      >
-        <div className="w-75  p-3">
-          <ChartGraph data={data} update={initialData}></ChartGraph>
-        </div>
-        {events[0] ? (
-          <>
-            <div className=" w-75 p-3 mb-5">
-              <ChartGraphOnline data={events}></ChartGraphOnline>
-            </div>
+    // <div>
+    //   <Header />
+    //   <div
+    //     id={"chart"}
+    //     className="d-flex flex-column justify-content-center align-items-center"
+    //   >
+    //     <div className="w-75  p-3">
+    //       <ChartGraph data={data} update={initialData}></ChartGraph>
+    //     </div>
+    //     {events[0] ? (
+    //       <>
+    //         <div className=" w-75 p-3 mb-5">
+    //           <ChartGraphOnline data={events}></ChartGraphOnline>
+    //         </div>
 
-            <div className=" w-25  ">
-              <Table dataDB={events}></Table>
-            </div>
-          </>
-        ) : null}
-        <div
-          id={"about"}
-          className=" container  d-flex  flex-column  justify-content-center align-items-center"
-        >
-          <About></About>
-        </div>
-      </div>
-    </div>
+    //         <div className=" w-25  ">
+    //           <Table dataDB={events}></Table>
+    //         </div>
+    //       </>
+    //     ) : null}
+    //     <div
+    //       id={"about"}
+    //       className=" container  d-flex  flex-column  justify-content-center align-items-center"
+    //     >
+    //       <About></About>
+    //     </div>
+    //   </div>
+    // </div>
+    <>
+    <Header />
+    <div className="container">
+    
+    
+        <ChartGraph data={data} update={initialData}></ChartGraph>
+      
+      {events[0] ? (
+        <>
+         
+            <ChartGraphOnline data={events}></ChartGraphOnline>
+        
+
+         
+            <Table dataDB={events}></Table>
+      
+        </>
+      ) : null}
+      
+        <About></About>
+    
+  
+  </div>
+  </>
   );
 }
 

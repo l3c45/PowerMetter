@@ -7,20 +7,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.nav {
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
 .logo {
   width: 70px;
 }
-
-#chart , .a ,#about  {
-  min-height: 90vh;
+.first {
+  text-indent: 40px;
 }
-
-.custom {
-  width: 78px 
+ 
+@media (min-width: 768px) {
+  .w-md-50 {
+      width: 50%;
+  }
 }
-
