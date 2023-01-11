@@ -13,7 +13,9 @@ body {
 .first {
   text-indent: 40px;
 }
- 
+.custom{
+  width: 80px;
+}
 @media (min-width: 768px) {
   .w-md-50 {
       width: 50%;

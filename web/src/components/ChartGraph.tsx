@@ -126,7 +126,7 @@ const ChartGraph = ({ data, update }: Props) => {
   return (
     <div className="mt-2">
       <Line options={options} data={dataSet}></Line>
-      <div className="d-flex justify-content-center gap-5 p-4 w ">
+      <div className="d-flex justify-content-center gap-4 py-4  ">
         <button
           onClick={() => updateFilter(0)}
           type="button"
