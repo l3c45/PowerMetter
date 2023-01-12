@@ -35,7 +35,8 @@ function App() {
 
     const list = await collection.find(
       { date: { $gt: filtered } },
-      { sort: { _id: -1 } }
+      { sort: { _id: -1 } },
+      { limit: 50 }
     );
     setData(list);
   };
@@ -59,7 +60,6 @@ function App() {
         {events[0] ? (
           <>
             <ChartGraphOnline data={events}></ChartGraphOnline>
-
             <Table dataDB={events}></Table>
           </>
         ) : null}

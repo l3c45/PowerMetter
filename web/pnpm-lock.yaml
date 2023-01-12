@@ -16,12 +16,11 @@ specifiers:
   bootswatch: ^5.2.3
   bson: ^4.7.1
   chart.js: ^4.1.2
-  chartjs-adapter-moment: ^1.0.1
+  chartjs-adapter-date-fns: ^3.0.0
   chartjs-plugin-streaming: ^2.0.0
-  jquery: ^3.6.3
-  moment: ^2.29.4
+  date-fns: ^2.29.3
   react: ^18.2.0
-  react-chartjs-2: ^5.1.0
+  react-chartjs-2: ^5.2.0
   react-dom: ^18.2.0
   react-scripts: 5.0.1
   realm-web: ^2.0.0
@@ -44,12 +43,11 @@ dependencies:
   bootswatch: 5.2.3
   bson: 4.7.1
   chart.js: 4.1.2
-  chartjs-adapter-moment: 1.0.1_cxwig3io7aelboy52h2qbyqnwa
+  chartjs-adapter-date-fns: 3.0.0_kluv2ktejb2igagp3yc56zuwiy
   chartjs-plugin-streaming: 2.0.0_chart.js@4.1.2
-  jquery: 3.6.3
-  moment: 2.29.4
+  date-fns: 2.29.3
   react: 18.2.0
-  react-chartjs-2: 5.1.0_mfjxiilvrceiwtanada6fxhije
+  react-chartjs-2: 5.2.0_mfjxiilvrceiwtanada6fxhije
   react-dom: 18.2.0_react@18.2.0
   react-scripts: 5.0.1_suhoixrbctjhyfojppfjnc4z4y
   realm-web: 2.0.0
@@ -3577,14 +3575,14 @@ packages:
       '@kurkle/color': 0.3.1
     dev: false
 
-  /chartjs-adapter-moment/1.0.1_cxwig3io7aelboy52h2qbyqnwa:
-    resolution: {integrity: sha512-Uz+nTX/GxocuqXpGylxK19YG4R3OSVf8326D+HwSTsNw1LgzyIGRo+Qujwro1wy6X+soNSnfj5t2vZ+r6EaDmA==}
+  /chartjs-adapter-date-fns/3.0.0_kluv2ktejb2igagp3yc56zuwiy:
+    resolution: {integrity: sha512-Rs3iEB3Q5pJ973J93OBTpnP7qoGwvq3nUnoMdtxO+9aoJof7UFcRbWcIDteXuYd1fgAvct/32T9qaLyLuZVwCg==}
     peerDependencies:
-      chart.js: '>=3.0.0'
-      moment: ^2.10.2
+      chart.js: '>=2.8.0'
+      date-fns: '>=2.0.0'
     dependencies:
       chart.js: 4.1.2
-      moment: 2.29.4
+      date-fns: 2.29.3
     dev: false
 
   /chartjs-plugin-streaming/2.0.0_chart.js@4.1.2:
@@ -4085,6 +4083,11 @@ packages:
       abab: 2.0.6
       whatwg-mimetype: 2.3.0
       whatwg-url: 8.7.0
+    dev: false
+
+  /date-fns/2.29.3:
+    resolution: {integrity: sha512-dDCnyH2WnnKusqvZZ6+jA1O51Ibt8ZMRNkDZdyAyK4YfbDwa/cEmuztzG5pk6hqlp9aSBPYcjOlktquahGwGeA==}
+    engines: {node: '>=0.11'}
     dev: false
 
   /debug/2.6.9:
@@ -6549,10 +6552,6 @@ packages:
       - utf-8-validate
     dev: false
 
-  /jquery/3.6.3:
-    resolution: {integrity: sha512-bZ5Sy3YzKo9Fyc8wH2iIQK4JImJ6R0GWI9kL1/k7Z91ZBNgkRXE6U0JfHIizZbort8ZunhSI3jw9I6253ahKfg==}
-    dev: false
-
   /js-base64/3.7.3:
     resolution: {integrity: sha512-PAr6Xg2jvd7MCR6Ld9Jg3BmTcjYsHEBx1VlwEwULb/qowPf5VD9kEMagj23Gm7JRnSvE/Da/57nChZjnvL8v6A==}
     dev: false
@@ -8318,8 +8317,8 @@ packages:
       whatwg-fetch: 3.6.2
     dev: false
 
-  /react-chartjs-2/5.1.0_mfjxiilvrceiwtanada6fxhije:
-    resolution: {integrity: sha512-Gt76b7+p7nMQq0MvkWfUSNAzIm/TLAnAO32zIpSzrQyc9JWRbVCtq8qOzPJmfpDzPcIJ7Y9Gp5g+VdTRrGITsQ==}
+  /react-chartjs-2/5.2.0_mfjxiilvrceiwtanada6fxhije:
+    resolution: {integrity: sha512-98iN5aguJyVSxp5U3CblRLH67J8gkfyGNbiK3c+l1QI/G4irHMPQw44aEPmjVag+YKTyQ260NcF82GTQ3bdscA==}
     peerDependencies:
       chart.js: ^4.1.1
       react: ^16.8.0 || ^17.0.0 || ^18.0.0

@@ -1,29 +1,32 @@
+
 import {
   Chart as ChartJS,
-  CategoryScale,
+  TimeScale,
   LinearScale,
   PointElement,
   LineElement,
   Title,
   Tooltip,
   Legend,
+  ChartData,
+  ChartOptions,
+  Decimation,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import StreamingPlugin from "chartjs-plugin-streaming";
-import "chartjs-plugin-streaming";
-import "chartjs-adapter-moment";
-import type { ChartData, ChartOptions } from "chart.js";
+import "chartjs-adapter-date-fns";
 import { useState } from "react";
 
+
 ChartJS.register(
-  CategoryScale,
   LinearScale,
+  TimeScale,
   PointElement,
   LineElement,
   Title,
   Tooltip,
   Legend,
-  StreamingPlugin
+  Decimation,
+  
 );
 
 type Props = {
@@ -50,13 +53,17 @@ const filterObj: Filter = {
 const ChartGraph = ({ data, update }: Props) => {
   const [filter, setFilter] = useState(filterObj[0]);
 
+  
+
   const updateFilter = (indexFilter: number) => {
     setFilter(filterObj[indexFilter]);
     update(filterObj[indexFilter].hours);
   };
 
   const options: ChartOptions<"line"> = {
-    spanGaps: 1000 * 60,
+   spanGaps: 1000 * 60,
+   animation: false,
+
     elements: {
       point: {
         radius: 0,
@@ -65,6 +72,9 @@ const ChartGraph = ({ data, update }: Props) => {
     responsive: true,
     scales: {
       y: {
+        type: "linear",
+        min:0,
+        max:250,
         beginAtZero: true,
         ticks: {
           color: "#fff",
@@ -74,8 +84,15 @@ const ChartGraph = ({ data, update }: Props) => {
         },
       },
       x: {
+        // min:(1673437842000),
+        // max:(1673457842000),
         type: "time",
+       
         ticks: {
+          source: 'auto',
+          // Disabled rotation for performance
+          maxRotation: 0,
+          autoSkip: true,
           color: "#fff",
           font: {
             size: 16,
@@ -102,30 +119,45 @@ const ChartGraph = ({ data, update }: Props) => {
           size: 20,
         },
       },
+      decimation:{
+        enabled:true,
+        algorithm:"lttb",
+        samples: 5,
+        threshold: 1999
+       
+        
+
+      },
+      
     },
   };
 
-  const dataSet: ChartData<"line"> = {
-    labels: data
-      .map((item) => +item.date)
-      .filter((item, i) => i % filter.offset === 0),
+  let dataSet: ChartData<"line"> = {
     datasets: [
-      {
+      
+      {normalized:true,
+        parsing:false,
+        indexAxis:"x",
+        
         label: "Tension ",
-        data: data
-          .map((item, i) => +item.value)
-          .filter((item, i) => i % filter.offset === 0),
+        data: [...data]
+          .map((item, i) => ({x:item.date,y:+item.value}))
+          .sort((a,b)=>a.x-b.x),
+          //.filter((item, i) => item.x%filter.offset === 0),
         fill: false,
         borderColor: "rgb(75, 192, 192)",
         borderWidth: 1,
+        borderDash:[],
         tension: 0,
+        stepped:false,
+        
       },
     ],
   };
 
   return (
     <div id="chart" className="mt-2">
-      <Line options={options} data={dataSet}></Line>
+      <Line  options={options} data={dataSet}></Line>
       <div className="d-flex justify-content-center gap-4 py-4  ">
         <button
           onClick={() => updateFilter(0)}

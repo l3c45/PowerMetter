@@ -1,54 +1,69 @@
+import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
-  CategoryScale,
   LinearScale,
   PointElement,
   LineElement,
   Title,
   Tooltip,
   Legend,
+  ChartOptions,
+  ChartData,
 } from "chart.js";
-import { Line } from "react-chartjs-2";
+import "chartjs-adapter-date-fns";
 import StreamingPlugin from "chartjs-plugin-streaming";
-import "chartjs-plugin-streaming";
-import "chartjs-adapter-moment";
-import type { ChartData, ChartOptions } from "chart.js";
 
 ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
+  StreamingPlugin,
   LineElement,
+  PointElement,
+  LinearScale,
   Title,
   Tooltip,
-  Legend,
-  StreamingPlugin
+  Legend
 );
 
-type Props = {
+type Point = {
   data: {
     value: string;
     date: number;
   }[];
 };
 
-const ChartGraphOnline = ({ data }: Props) => {
-  const options: ChartOptions<"line"> = {
-    animation: false,
+const ChartGraphOnline = ({ data }: Point) => {
+ 
+  const d: ChartData<"line"> = {
+    datasets: [
+      {
+        borderColor: "rgb(75, 192, 192)",
+        tension: 0.2,
+        label: "Tension ",
+        data: data.map((it) => ({ x: it.date, y: Number(it.value) })),
+      },
+    ],
+  };
 
+  const config: ChartOptions<"line"> = {
     responsive: true,
+    animation: false,
     scales: {
       x: {
         type: "realtime",
-
         realtime: {
           refresh: 1000,
-          delay: 1000,
+          duration: 20000,
+          frameRate: 30,
+          delay: 0,
+          // onRefresh: (chart) => {
+          //   setD((prev) => [...prev, { x: Date.now(), y: Math.random() }]);
+          //   //chart.data.datasets[0].data.push({ x: Date.now(), y: 10 });
+          // },
         },
-
         ticks: {
           color: "#fff",
-
+          // callback: (val,i) => {
+          //   return `${new Date(val).getHours()}:${new Date(val).getMinutes()}:${new Date(val).getSeconds()}`
+          //  },
           font: {
             size: 16,
           },
@@ -58,7 +73,6 @@ const ChartGraphOnline = ({ data }: Props) => {
         beginAtZero: true,
         ticks: {
           color: "#fff",
-
           font: {
             size: 16,
           },
@@ -86,21 +100,9 @@ const ChartGraphOnline = ({ data }: Props) => {
     },
   };
 
-  const dataSet: ChartData<"line"> = {
-    datasets: [
-      {
-        label: "Tension ",
-        data: data.map((item) => ({ x: item.date, y: +item.value })),
-        fill: false,
-        borderColor: "rgb(75, 192, 192)",
-        tension: 0.1,
-      },
-    ],
-  };
-
   return (
     <div className="mb-5">
-      <Line options={options} data={dataSet}></Line>
+      <Line data={d} options={config} />
     </div>
   );
 };

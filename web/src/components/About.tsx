@@ -14,12 +14,13 @@ const About = () => {
       <p className={"text-justify lead"}>
         A raiz de esta problematica surgio la idea de este proyecto.El mismo
         consiste de tres etapas:
-        <ul>
+        
+      </p>
+      <ul>
           <li>Adquisicion</li>
           <li>Almacenamiento </li>
           <li>Visualizacion </li>
         </ul>
-      </p>
 
       <h5>Adquisicion de datos</h5>
       <p className={"text-justify lead"}>
