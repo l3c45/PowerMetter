@@ -36,7 +36,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "postinstall": "npx patch-package"
+    "postinstall": "npx @milahu/patch-package-with-pnpm-support"
   },
   "eslintConfig": {
     "extends": [
