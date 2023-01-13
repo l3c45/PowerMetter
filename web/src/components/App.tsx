@@ -60,16 +60,20 @@ function App() {
     <>
       <Header />
       <div className="container">
-      <div className="vh-100 d-flex justify-content-center align-items-center">
+      <div className=" position-relative  d-flex justify-content-center align-items-center">
+      <ChartGraph data={data} update={initialData}></ChartGraph>
         {loading ? (
-         
+          <div className="overlay position-absolute w-100 h-100 d-flex justify-content-center align-items-center ">
             <div
             style={{width: "3rem", height: "3rem"}}
-              className="  spinner-border text-primary "
+              className=" spinner-border text-primary "
               role="status"
             >
           </div>
-        ) :<ChartGraph data={data} update={initialData}></ChartGraph>}</div>
+          </div>
+        ) :null}
+      
+        </div>
         
 
         {events[0] ? (

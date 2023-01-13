@@ -33,14 +33,14 @@ const Header = () => {
             <ul className="navbar-nav  ">
               <li className="nav-item">
                 <a className="nav-link active" href="#chart">
-                  Home
+                  Registro de datos
                   <span className="visually-hidden">(current)</span>
                 </a>
               </li>
 
               <li className="nav-item">
                 <a className="nav-link" href="#about">
-                  About
+                  Acerca
                 </a>
               </li>
             </ul>
