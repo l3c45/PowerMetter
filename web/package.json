@@ -6,6 +6,7 @@
   "dependencies": {
     "@babel/plugin-syntax-flow": "^7.14.5",
     "@babel/plugin-transform-react-jsx": "^7.14.9",
+    "@milahu/patch-package-with-pnpm-support": "^6.4.10",
     "@testing-library/dom": "^8.19.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -34,7 +35,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "postinstall": "npx patch-package"
   },
   "eslintConfig": {
     "extends": [
