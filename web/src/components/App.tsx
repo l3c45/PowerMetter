@@ -6,6 +6,8 @@ import ChartGraph from "./ChartGraph";
 import Header from "./Header";
 import Table from "./Table";
 import ChartGraphOnline from "./ChartGraphOnline";
+import { LTTB } from "../utils/LTTB";
+import { Point } from "../types";
 
 const app = new Realm.App({ id: "application-0-zqfsi" });
 
@@ -14,7 +16,8 @@ type INIT = { _id: number; value: string; date: number; _v: number };
 
 function App() {
   const [events, setEvents] = useState<Event[]>([]);
-  const [data, setData] = useState<INIT[]>([]);
+  const [data, setData] = useState<Point[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const listener = async () => {
     const mongodb = app?.currentUser?.mongoClient("mongodb-atlas");
@@ -26,6 +29,7 @@ function App() {
   };
 
   const initialData = async (range = 24) => {
+    setLoading(true);
     const mongodb = app?.currentUser?.mongoClient("mongodb-atlas");
     const collection: any = mongodb?.db("power-metter").collection("voltages");
 
@@ -33,12 +37,13 @@ function App() {
     const filter = range * 60 * 60 * 1000;
     const filtered = currentTime - filter;
 
-    const list = await collection.find(
-      { date: { $gt: filtered } },
-      { sort: { _id: -1 } },
-      { limit: 50 }
-    );
-    setData(list);
+    const list = await collection.find({ date: { $gt: filtered } });
+    const parsed = list.map((item: INIT) => ({ x: item.date, y: +item.value }));
+
+    const downsampled = LTTB(parsed, 100, "x", "y");
+
+    setData(downsampled);
+    setLoading(false);
   };
 
   const login = async () => {
@@ -55,7 +60,17 @@ function App() {
     <>
       <Header />
       <div className="container">
-        <ChartGraph data={data} update={initialData}></ChartGraph>
+      <div className="vh-100 d-flex justify-content-center align-items-center">
+        {loading ? (
+         
+            <div
+            style={{width: "3rem", height: "3rem"}}
+              className="  spinner-border text-primary "
+              role="status"
+            >
+          </div>
+        ) :<ChartGraph data={data} update={initialData}></ChartGraph>}</div>
+        
 
         {events[0] ? (
           <>

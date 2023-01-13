@@ -32,10 +32,10 @@ THE SOFTWARE.
 // can remove the `root` use and the passing `this` as the first arg to
 // the top function.
 
-//  type Point = { x: number; y: number };
-// type P = keyof Point;
+type Point = { x: number; y: number };
+type P = keyof Point;
 
-export function LTTB( data, threshold, xAccessor ,yAccessor){
+export function LTTB( data:Point[], threshold:number, xAccessor:P ,yAccessor:P){
   var floor = Math.floor,
     abs = Math.abs,
     dataLength = data.length,
@@ -111,5 +111,5 @@ export function LTTB( data, threshold, xAccessor ,yAccessor){
 
   sampled[sampledIndex++] = data[dataLength - 1]; // Always add last
 
-  return sampled;
+  return sampled as Point[]
 }

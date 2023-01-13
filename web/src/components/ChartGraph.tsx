@@ -14,9 +14,8 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import "chartjs-adapter-date-fns";
-
-import { LTTB } from "../utils/LTTB";
 import { useState } from "react";
+import { Point } from "../types";
 
 
 
@@ -32,13 +31,9 @@ ChartJS.register(
   
 );
 
+
 type Props = {
-  data: {
-    _id: number;
-    value: string;
-    date: number;
-    _v: number;
-  }[];
+  data:Point[];
   update: (range: number) => void;
 };
 
@@ -54,17 +49,7 @@ const filterObj: Filter = {
 };
 
 const ChartGraph = ({ data, update }: Props) => {
-  const [filter, setFilter] = useState(filterObj[0]);
-
-  const a=LTTB(
-    [...data]
-      .map((item, i) => ({x:item.date,y:+item.value}))
-      .sort((a,b)=>a.x-b.x),
-      70,"x","y"
-
-
-  )
-  
+  const [filter, setFilter] = useState(filterObj[1]);
 
   const updateFilter = (indexFilter: number) => {
     setFilter(filterObj[indexFilter]);
@@ -74,7 +59,7 @@ const ChartGraph = ({ data, update }: Props) => {
   const options: ChartOptions<"line"> = {
    //spanGaps: 1000 * 60,
    spanGaps:10000000,
-   animation: false,
+  //  animation: true,
 
     elements: {
       point: {
@@ -153,7 +138,7 @@ const ChartGraph = ({ data, update }: Props) => {
         indexAxis:"x",
         
         label: "Tension ",
-        data: a,
+        data: data,
         // [...data]
         //   .map((item, i) => ({x:item.date,y:+item.value}))
         //   .sort((a,b)=>a.x-b.x),
@@ -162,7 +147,7 @@ const ChartGraph = ({ data, update }: Props) => {
         borderColor: "rgb(75, 192, 192)",
         borderWidth: 1,
         borderDash:[],
-        tension: 0.2,
+        tension: 0.4,
         stepped:false,
         
       },
@@ -170,7 +155,7 @@ const ChartGraph = ({ data, update }: Props) => {
   };
 
   return (
-    <div id="chart" className="mt-2">
+    <div id="chart" className="mt-2 w-100 h-100">
       <Line  options={options} data={dataSet}></Line>
       <div className="d-flex justify-content-center gap-4 py-4  ">
         <button
