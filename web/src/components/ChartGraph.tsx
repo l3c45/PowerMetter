@@ -96,8 +96,8 @@ const ChartGraph = ({ data, update }: Props) => {
         },
       },
       x: {
-        // min:(1673437842000),
-        // max:(1673457842000),
+         min:(Date.now()-filter.hours*3600*1000),
+        max :Date.now(),
         type: "time",
        
         ticks: {
