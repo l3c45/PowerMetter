@@ -14,7 +14,10 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import "chartjs-adapter-date-fns";
+
+import { LTTB } from "../utils/LTTB";
 import { useState } from "react";
+
 
 
 ChartJS.register(
@@ -53,6 +56,14 @@ const filterObj: Filter = {
 const ChartGraph = ({ data, update }: Props) => {
   const [filter, setFilter] = useState(filterObj[0]);
 
+  const a=LTTB(
+    [...data]
+      .map((item, i) => ({x:item.date,y:+item.value}))
+      .sort((a,b)=>a.x-b.x),
+      70,"x","y"
+
+
+  )
   
 
   const updateFilter = (indexFilter: number) => {
@@ -61,12 +72,13 @@ const ChartGraph = ({ data, update }: Props) => {
   };
 
   const options: ChartOptions<"line"> = {
-   spanGaps: 1000 * 60,
+   //spanGaps: 1000 * 60,
+   spanGaps:10000000,
    animation: false,
 
     elements: {
       point: {
-        radius: 0,
+        radius: 1,
       },
     },
     responsive: true,
@@ -119,15 +131,15 @@ const ChartGraph = ({ data, update }: Props) => {
           size: 20,
         },
       },
-      decimation:{
-        enabled:true,
-        algorithm:"lttb",
-        samples: 5,
-        threshold: 1999
+      // decimation:{
+      //   enabled:true,
+      //   algorithm:"lttb",
+      //   samples: 5,
+      //   threshold: 1999
        
         
 
-      },
+      // },
       
     },
   };
@@ -135,20 +147,22 @@ const ChartGraph = ({ data, update }: Props) => {
   let dataSet: ChartData<"line"> = {
     datasets: [
       
-      {normalized:true,
-        parsing:false,
+      {
+        // normalized:true,
+        // parsing:false,
         indexAxis:"x",
         
         label: "Tension ",
-        data: [...data]
-          .map((item, i) => ({x:item.date,y:+item.value}))
-          .sort((a,b)=>a.x-b.x),
+        data: a,
+        // [...data]
+        //   .map((item, i) => ({x:item.date,y:+item.value}))
+        //   .sort((a,b)=>a.x-b.x),
           //.filter((item, i) => item.x%filter.offset === 0),
         fill: false,
         borderColor: "rgb(75, 192, 192)",
         borderWidth: 1,
         borderDash:[],
-        tension: 0,
+        tension: 0.2,
         stepped:false,
         
       },
