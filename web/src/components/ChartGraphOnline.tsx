@@ -12,6 +12,7 @@ import {
 } from "chart.js";
 import "chartjs-adapter-date-fns";
 import StreamingPlugin from "chartjs-plugin-streaming";
+import { INIT } from "../types";
 
 ChartJS.register(
   StreamingPlugin,
@@ -23,14 +24,11 @@ ChartJS.register(
   Legend
 );
 
-type Point = {
-  data: {
-    value: string;
-    date: number;
-  }[];
+type Props = {
+  data:INIT[];
 };
 
-const ChartGraphOnline = ({ data }: Point) => {
+const ChartGraphOnline = ({ data }: Props) => {
  
   const d: ChartData<"line"> = {
     datasets: [
@@ -38,7 +36,19 @@ const ChartGraphOnline = ({ data }: Point) => {
         borderColor: "rgb(75, 192, 192)",
         tension: 0.2,
         label: "Tension ",
-        data: data.map((it) => ({ x: it.date, y: Number(it.value) })),
+        data: data.map((item) => ({ x: item.date, y: item.voltage })),
+      },
+      {
+        borderColor: "rgb(0,250,154)",
+        tension: 0.2,
+        label: "Tension ",
+        data: data.map((item) => ({ x: item.date, y: item.current })),
+      },
+      {
+        borderColor: "rgb(220,20,60)",
+        tension: 0.2,
+        label: "Tension ",
+        data: data.map((item) => ({ x: item.date, y: item.temperature })),
       },
     ],
   };

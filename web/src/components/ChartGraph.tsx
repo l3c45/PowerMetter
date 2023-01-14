@@ -1,4 +1,3 @@
-
 import {
   Chart as ChartJS,
   TimeScale,
@@ -15,9 +14,7 @@ import {
 import { Line } from "react-chartjs-2";
 import "chartjs-adapter-date-fns";
 import { useState } from "react";
-import { Point } from "../types";
-
-
+import type { DataState } from "../types";
 
 ChartJS.register(
   LinearScale,
@@ -31,9 +28,8 @@ ChartJS.register(
   
 );
 
-
 type Props = {
-  data:Point[];
+  data:DataState;
   update: (range: number) => void;
 };
 
@@ -58,7 +54,7 @@ const ChartGraph = ({ data, update }: Props) => {
 
   const options: ChartOptions<"line"> = {
    //spanGaps: 1000 * 60,
-   spanGaps:10000000,
+    spanGaps:10000000,
   //  animation: true,
 
     elements: {
@@ -81,10 +77,10 @@ const ChartGraph = ({ data, update }: Props) => {
         },
       },
       x: {
-         min:(Date.now()-filter.hours*3600*1000),
+        min:(Date.now()-filter.hours*3600*1000),
         max :Date.now(),
         type: "time",
-       
+        
         ticks: {
           source: 'auto',
           // Disabled rotation for performance
@@ -121,7 +117,7 @@ const ChartGraph = ({ data, update }: Props) => {
       //   algorithm:"lttb",
       //   samples: 5,
       //   threshold: 1999
-       
+      
         
 
       // },
@@ -131,14 +127,12 @@ const ChartGraph = ({ data, update }: Props) => {
 
   let dataSet: ChartData<"line"> = {
     datasets: [
-      
       {
         // normalized:true,
         // parsing:false,
         indexAxis:"x",
-        
         label: "Tension ",
-        data: data,
+        data: data.voltage,
         // [...data]
         //   .map((item, i) => ({x:item.date,y:+item.value}))
         //   .sort((a,b)=>a.x-b.x),
@@ -149,7 +143,40 @@ const ChartGraph = ({ data, update }: Props) => {
         borderDash:[],
         tension: 0.4,
         stepped:false,
-        
+      },
+      {
+        // normalized:true,
+        // parsing:false,
+        indexAxis:"x",
+        label: "Corriente ",
+        data: data.current,
+        // [...data]
+        //   .map((item, i) => ({x:item.date,y:+item.value}))
+        //   .sort((a,b)=>a.x-b.x),
+          //.filter((item, i) => item.x%filter.offset === 0),
+        fill: false,
+        borderColor: "rgb(0,250,154)",
+        borderWidth: 1,
+        borderDash:[],
+        tension: 0.4,
+        stepped:false,
+      },
+      {
+        // normalized:true,
+        // parsing:false,
+        indexAxis:"x",
+        label: "Temperatura ",
+        data: data.temperature,
+        // [...data]
+        //   .map((item, i) => ({x:item.date,y:+item.value}))
+        //   .sort((a,b)=>a.x-b.x),
+          //.filter((item, i) => item.x%filter.offset === 0),
+        fill: false,
+        borderColor: "rgb(220,20,60)",
+        borderWidth: 1,
+        borderDash:[],
+        tension: 0.4,
+        stepped:false,
       },
     ],
   };

@@ -1,8 +1,7 @@
+import  type { INIT } from "../types";
+
 type Props = {
-  dataDB: {
-    date: number;
-    value: string;
-  }[];
+  dataDB: INIT[];
 };
 
 const Table = ({ dataDB }: Props) => {
@@ -27,7 +26,9 @@ const Table = ({ dataDB }: Props) => {
               className="default "
               style={i === arr.length - 1 ? fade : {}}
             >
-              <td className="text-center text">{e.value}</td>
+              <td className="text-center text">{e.voltage} V</td>
+              <td className="text-center text">{e.current} A</td>
+              <td className="text-center text">{e.temperature} °C</td>
               <td className="text-center text">
                 {new Date(e.date).toLocaleString().toString()}
               </td>

@@ -1,22 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import * as Realm from "realm-web";
 import { useEffect, useState } from "react";
-import About from "./About";
-import ChartGraph from "./ChartGraph";
+import * as Realm from "realm-web";
 import Header from "./Header";
-import Table from "./Table";
+import ChartGraph from "./ChartGraph";
 import ChartGraphOnline from "./ChartGraphOnline";
+import Table from "./Table";
+import About from "./About";
 import { LTTB } from "../utils/LTTB";
-import { Point } from "../types";
+import type { DataState, INIT } from "../types";
 
 const app = new Realm.App({ id: "application-0-zqfsi" });
 
 type Event = { date: number; value: string };
-type INIT = { _id: number; value: string; date: number; _v: number };
+
 
 function App() {
-  const [events, setEvents] = useState<Event[]>([]);
-  const [data, setData] = useState<Point[]>([]);
+  const [events, setEvents] = useState<INIT[]>([]);
+  const [data, setData] = useState<DataState>({
+    voltage: [],
+    current: [],
+    temperature: [],
+  });
   const [loading, setLoading] = useState<boolean>(true);
 
   const listener = async () => {
@@ -38,11 +42,28 @@ function App() {
     const filtered = currentTime - filter;
 
     const list = await collection.find({ date: { $gt: filtered } });
-    const parsed = list.map((item: INIT) => ({ x: item.date, y: +item.value }));
+    const parsedV = [...list].map((item: INIT) => ({
+      x: item.date,
+      y: item.voltage,
+    }));
+    const parsedC = [...list].map((item: INIT) => ({
+      x: item.date,
+      y: item.current,
+    }));
+    const parsedT = [...list].map((item: INIT) => ({
+      x: item.date,
+      y: item.temperature,
+    }));
 
-    const downsampled = LTTB(parsed, 100, "x", "y");
+    const downsampledV = LTTB(parsedV, 100, "x", "y");
+    const downsampledC = LTTB(parsedC, 100, "x", "y");
+    const downsampledT = LTTB(parsedT, 100, "x", "y");
 
-    setData(downsampled);
+    setData((prev) => ({
+      voltage: downsampledV,
+      current: downsampledC,
+      temperature: downsampledT,
+    }));
     setLoading(false);
   };
 
@@ -60,21 +81,18 @@ function App() {
     <>
       <Header />
       <div className="container">
-      <div className=" position-relative  d-flex justify-content-center align-items-center">
-      <ChartGraph data={data} update={initialData}></ChartGraph>
-        {loading ? (
-          <div className="overlay position-absolute w-100 h-100 d-flex justify-content-center align-items-center ">
-            <div
-            style={{width: "3rem", height: "3rem"}}
-              className=" spinner-border text-primary "
-              role="status"
-            >
-          </div>
-          </div>
-        ) :null}
-      
+        <div className=" position-relative  d-flex justify-content-center align-items-center">
+          <ChartGraph data={data} update={initialData}></ChartGraph>
+          {loading ? (
+            <div className="overlay position-absolute w-100 h-100 d-flex justify-content-center align-items-center ">
+              <div
+                style={{ width: "3rem", height: "3rem" }}
+                className=" spinner-border text-primary "
+                role="status"
+              ></div>
+            </div>
+          ) : null}
         </div>
-        
 
         {events[0] ? (
           <>
