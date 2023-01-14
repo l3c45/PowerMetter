@@ -1,20 +1,26 @@
 import mongoose from "mongoose";
 
-interface IVoltage {
-  value: string;
+interface ISerialData {
+  voltage: number;
+  current: number;
+  temperature: number;
   date: number;
 }
 
-const dataSchema = new mongoose.Schema<IVoltage>({
-  value: String,
-  date: Number
+const dataSchema = new mongoose.Schema<ISerialData>({
+  voltage: Number,
+  current: Number,
+  temperature: Number,
+  date: Number,
 });
 
-const Voltage  = mongoose.model<IVoltage>("Voltage", dataSchema);
+const Voltage = mongoose.model<ISerialData>("Voltage", dataSchema);
 
-const save = (obj:IVoltage) => {
+const save = (obj: ISerialData) => {
   const data = new Voltage({
-    value: obj.value,
+    voltage: obj.voltage,
+    current: obj.current,
+    temperature: obj.temperature,
     date: obj.date,
   });
 

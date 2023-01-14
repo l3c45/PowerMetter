@@ -34,9 +34,10 @@ const connect = () => {
     });
 
     parser.on("data", (data) => {
-      let date = new Date().getTime();
-      let res = { value: data, date };
-
+      const date = new Date().getTime();
+      const arr=data.split(",")
+      const [voltage,current,temperature]=arr
+      const res = { voltage:+voltage,current:+current,temperature:+temperature,date };
       save(res);
     });
   });
