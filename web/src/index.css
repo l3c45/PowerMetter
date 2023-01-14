@@ -17,19 +17,25 @@ body {
   width: 80px;
 }
 .overlay{
-  
-  background-color: rgba(0,0,0,0.5); /* Black background with opacity */
-  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+  background-color: rgba(0,0,0,0.5); 
+  z-index: 2; 
   cursor: pointer;
 }
 
-.spinner{
-  
-
-}
 
 @media (min-width: 768px) {
   .w-md-50 {
       width: 50%;
   }
+}
+
+@keyframes resplandorAnimation {
+  0%,100%{
+    box-shadow: 0px 0px 10px;
+  }
+  50%{
+  box-shadow: 0px 0px 0px;
+  
+  }
+
 }

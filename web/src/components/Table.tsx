@@ -6,7 +6,10 @@ type Props = {
 
 const Table = ({ dataDB }: Props) => {
   const fade = {
-    fontWeight: "bold",
+    border: "1px solid black",
+    padding: "10px 10px",
+    boxShadow: "0px 0px 10px",
+    animation: "infinite resplandorAnimation 1.5s"
   };
 
   return (
