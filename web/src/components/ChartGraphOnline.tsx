@@ -41,13 +41,13 @@ const ChartGraphOnline = ({ data }: Props) => {
       {
         borderColor: "rgb(0,250,154)",
         tension: 0.2,
-        label: "Tension ",
+        label: "Corriente ",
         data: data.map((item) => ({ x: item.date, y: item.current })),
       },
       {
         borderColor: "rgb(220,20,60)",
         tension: 0.2,
-        label: "Tension ",
+        label: "Temperatura",
         data: data.map((item) => ({ x: item.date, y: item.temperature })),
       },
     ],
