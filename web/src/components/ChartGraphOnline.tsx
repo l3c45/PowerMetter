@@ -13,6 +13,7 @@ import {
 import "chartjs-adapter-date-fns";
 import StreamingPlugin from "chartjs-plugin-streaming";
 import { INIT } from "../types";
+import Aside from "./Aside";
 
 ChartJS.register(
   StreamingPlugin,
@@ -110,8 +111,13 @@ const ChartGraphOnline = ({ data }: Props) => {
   };
 
   return (
-    <div className="mb-5">
-      <Line data={d} options={config} />
+    <div className="mb-5 row ">
+      <div className="col col-lg-10 col-md-12">
+
+      <Line  data={d} options={config} />
+
+      </div>
+      <Aside last={data[data.length-1]} customStyle={"col col-lg-2 col-md-12"}></Aside>
     </div>
   );
 };

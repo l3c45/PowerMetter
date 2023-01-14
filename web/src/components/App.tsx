@@ -92,10 +92,10 @@ function App() {
         </div>
 
         {events[0] ? (
-          <>
+          <div className="container">
             <ChartGraphOnline data={events}></ChartGraphOnline>
             <Table dataDB={events}></Table>
-          </>
+          </div>
         ) : null}
 
         <About></About>
