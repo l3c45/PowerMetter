@@ -76,7 +76,7 @@ function App() {
 
   return (
     <>
-      <Header />
+      <Header active={events[0]?true:false}/>
       <div className="container">
         <div className=" position-relative  d-flex justify-content-center align-items-center">
           <ChartGraph data={data} update={initialData}></ChartGraph>
