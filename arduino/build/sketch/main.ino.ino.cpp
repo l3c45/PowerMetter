@@ -1,3 +1,5 @@
+#include <Arduino.h>
+#line 1 "c:\\Users\\PC\\Desktop\\PoweMetter\\arduino\\main.ino\\main.ino.ino"
 #include <LiquidCrystal.h>
 
 // Parametros de lcd: (rs, enable, d4, d5, d6, d7)
@@ -10,6 +12,11 @@ unsigned int tempNumber;
 char buffer[10];
 
 
+#line 13 "c:\\Users\\PC\\Desktop\\PoweMetter\\arduino\\main.ino\\main.ino.ino"
+void setup();
+#line 23 "c:\\Users\\PC\\Desktop\\PoweMetter\\arduino\\main.ino\\main.ino.ino"
+void loop();
+#line 13 "c:\\Users\\PC\\Desktop\\PoweMetter\\arduino\\main.ino\\main.ino.ino"
 void setup() {
   
   randomSeed(analogRead(0));

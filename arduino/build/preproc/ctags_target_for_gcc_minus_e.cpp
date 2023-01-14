@@ -1,4 +1,5 @@
-#include <LiquidCrystal.h>
+# 1 "c:\\Users\\PC\\Desktop\\PoweMetter\\arduino\\main.ino\\main.ino.ino"
+# 2 "c:\\Users\\PC\\Desktop\\PoweMetter\\arduino\\main.ino\\main.ino.ino" 2
 
 // Parametros de lcd: (rs, enable, d4, d5, d6, d7)
 LiquidCrystal lcd(9, 8, 5, 4, 3, 2);
@@ -11,13 +12,13 @@ char buffer[10];
 
 
 void setup() {
-  
+
   randomSeed(analogRead(0));
 
   Serial.begin(9600);
   //16 columnas ,2 filas
   lcd.begin(16, 2);
-  
+
 }
 
 void loop() {
@@ -38,12 +39,12 @@ void loop() {
   lcd.print(randomNumber);
   lcd.setCursor(9, 1);
   lcd.print("V");
-  
+
   delay(DELAY_LOOP);
 
  //Limpia LCD para permitir actualizar
   lcd.clear();
-  
 
-  
+
+
 }
