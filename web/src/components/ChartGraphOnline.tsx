@@ -111,7 +111,7 @@ const ChartGraphOnline = ({ data }: Props) => {
   };
 
   return (
-    <div className="mb-5 row ">
+    <div className="mb-5 row align-items-center ">
       <div className="col col-lg-10 col-md-12">
 
       <Line  data={d} options={config} />

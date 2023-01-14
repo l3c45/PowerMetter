@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from "react";
 import { INIT } from "../types";
 
 interface Props {
@@ -7,8 +9,41 @@ interface Props {
 
 const Aside = ({customStyle,last}:Props) => {
 
-const {voltage,current,temperature}=last
-const KwH=((voltage*current)/3).toFixed(1)
+  const [acc, setAcc] = useState<number>(0)
+  const [time, setTime] = useState(0)
+
+const {voltage,current}=last
+const KwH=(((voltage*current)/60)/1000).toFixed(2)
+
+useEffect(() => {
+  setAcc(prev=>prev+ +KwH)
+}, [last])
+
+useEffect(() => {
+  let interval = setInterval(() => {
+  setTime((prev) => prev + 1);
+  }, 1000);
+ 
+  return () => {
+  clearInterval(interval);
+  };
+  }, []);
+
+
+  const timer=():string=>{
+    console.log("llamada")
+if (time<10){
+  return `00:0${time}`
+}else if (time<60){
+  return  `00:${time}`
+}
+
+const minute=Math.trunc(time/60)
+const seconds=time-(minute*60)
+
+return `${minute}:${seconds<10?"0"+seconds:seconds}`
+  }
+
 
   return (
     <aside className={`${customStyle}`} >
@@ -28,11 +63,15 @@ const KwH=((voltage*current)/3).toFixed(1)
       </section>
       <section className="  overflow-hidden col-5 col-lg-12   text-center rounded border border-primary m-1 py-1">
         <p className=" fw-bold mb-2">Consumo</p>
-        <h3 className=" inline  mb-0 mt-2">{KwH} </h3><span>KW/h</span>
+        <h3 className="   mb-0 mt-2">{KwH} Kw/h </h3>
       </section>
       <section className="col-5 col-lg-12   text-center rounded border border-primary m-1 py-1">
-        <p className=" fw-bold mb-2">Temp.</p>
-        <h3 className=" t mb-0 mt-2">{temperature} °C</h3>
+        <p className=" fw-bold mb-2">Acumulado sesion</p>
+        <h3 className=" t mb-0 mt-2">{acc.toFixed(2)} Kw/h</h3>
+      </section>
+      <section className="col-5 col-lg-12   text-center rounded border border-primary m-1 py-1">
+        <p className=" fw-bold mb-2">Tiempo de sesion</p>
+        <h3 className=" t mb-0 mt-2">{timer()}</h3>
       </section>
       </div>
     </aside>
