@@ -11,9 +11,6 @@ import type { DataState, INIT } from "../types";
 
 const app = new Realm.App({ id: "application-0-zqfsi" });
 
-type Event = { date: number; value: string };
-
-
 function App() {
   const [events, setEvents] = useState<INIT[]>([]);
   const [data, setData] = useState<DataState>({
