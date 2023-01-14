@@ -14,6 +14,8 @@ const Table = ({ dataDB }: Props) => {
       <thead>
         <tr className="table-primary">
           <td className="text-center">Tensión</td>
+          <td className="text-center">Corriente</td>
+          <td className="text-center">Temperatura</td>
           <td className="text-center">Fecha</td>
         </tr>
       </thead>
