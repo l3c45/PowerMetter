@@ -13,10 +13,12 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import "chartjs-adapter-date-fns";
-import { useState } from "react";
+import zoomPlugin from "chartjs-plugin-zoom";
+import { useMemo, useState } from "react";
 import type { DataState } from "../types";
 
 ChartJS.register(
+  zoomPlugin,
   LinearScale,
   TimeScale,
   PointElement,
@@ -24,12 +26,11 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
-  Decimation,
-  
+  Decimation
 );
 
 type Props = {
-  data:DataState;
+  data: DataState;
   update: (range: number) => void;
 };
 
@@ -52,138 +53,161 @@ const ChartGraph = ({ data, update }: Props) => {
     update(filterObj[indexFilter].hours);
   };
 
-  const options: ChartOptions<"line"> = {
-   //spanGaps: 1000 * 60,
-    spanGaps:10000000,
-  //  animation: true,
-
-    elements: {
-      point: {
-        radius: 1,
-      },
-    },
-    responsive: true,
-    scales: {
-      y: {
-        type: "linear",
-        min:0,
-        max:250,
-        beginAtZero: true,
-        ticks: {
-          color: "#fff",
-          font: {
-            size: 16,
+  const options :ChartOptions<"line"> = useMemo(
+    () => ({
+      transitions: {
+        zoom: {
+          animation: {
+            duration: 0,
           },
         },
       },
-      x: {
-        min:(Date.now()-filter.hours*3600*1000),
-        max :Date.now(),
-        type: "time",
-        
-        ticks: {
-          source: 'auto',
-          // Disabled rotation for performance
-          maxRotation: 0,
-          autoSkip: true,
-          color: "#fff",
-          font: {
-            size: 16,
+      //spanGaps: 1000 * 60,
+      spanGaps: 10000000,
+      //  animation: true,
+
+      elements: {
+        point: {
+          radius: 1,
+        },
+      },
+      responsive: true,
+      scales: {
+        y: {
+          type: "linear",
+          min: 0,
+          max: 250,
+          beginAtZero: true,
+          ticks: {
+            color: "#fff",
+            font: {
+              size: 16,
+            },
+          },
+        },
+        x: {
+          min: Date.now() - filter.hours * 3600 * 1000,
+          max: Date.now(),
+          type: "time",
+
+          ticks: {
+            source: "auto",
+            // Disabled rotation for performance
+            maxRotation: 0,
+            autoSkip: true,
+            color: "#fff",
+            font: {
+              size: 16,
+            },
           },
         },
       },
-    },
 
-    plugins: {
-      legend: {
-        labels: {
+      plugins: {
+        legend: {
+          labels: {
+            color: "#fff",
+            font: {
+              size: 16,
+            },
+          },
+          position: "top" as const,
+        },
+        title: {
+          display: true,
+          text: `Tension del suministro electrico de ${filter.string} atras `,
           color: "#fff",
           font: {
-            size: 16,
+            size: 20,
           },
         },
-        position: "top" as const,
-      },
-      title: {
-        display: true,
-        text: `Tension del suministro electrico de ${filter.string} atras `,
-        color: "#fff",
-        font: {
-          size: 20,
-        },
-      },
-      // decimation:{
-      //   enabled:true,
-      //   algorithm:"lttb",
-      //   samples: 5,
-      //   threshold: 1999
-      
-        
+        zoom: {
+          pan: {
+            enabled: false,
+            mode: "xy", // Allow panning in the x direction
+            modifierKey: "ctrl",
+          },
 
-      // },
-      
-    },
-  };
+          zoom: {
+            wheel: {
+              enabled: true,
+            },
+            pinch: {
+              enabled: true,
+            },
+            mode: "x",
+          },
+        },
+        // decimation:{
+        //   enabled:true,
+        //   algorithm:"lttb",
+        //   samples: 5,
+        //   threshold: 100
+        // },
+      },
+    }),
+    [filter]
+  );
 
   let dataSet: ChartData<"line"> = {
     datasets: [
       {
         // normalized:true,
         // parsing:false,
-        indexAxis:"x",
+        indexAxis: "x",
         label: "Tension ",
         data: data.voltage,
         // [...data]
         //   .map((item, i) => ({x:item.date,y:+item.value}))
         //   .sort((a,b)=>a.x-b.x),
-          //.filter((item, i) => item.x%filter.offset === 0),
+        //.filter((item, i) => item.x%filter.offset === 0),
         fill: false,
         borderColor: "rgb(75, 192, 192)",
         borderWidth: 1,
-        borderDash:[],
+        borderDash: [],
         tension: 0.4,
-        stepped:false,
+        stepped: false,
       },
       {
         // normalized:true,
         // parsing:false,
-        indexAxis:"x",
+        indexAxis: "x",
         label: "Corriente ",
         data: data.current,
         // [...data]
         //   .map((item, i) => ({x:item.date,y:+item.value}))
         //   .sort((a,b)=>a.x-b.x),
-          //.filter((item, i) => item.x%filter.offset === 0),
+        //.filter((item, i) => item.x%filter.offset === 0),
         fill: false,
         borderColor: "rgb(0,250,154)",
         borderWidth: 1,
-        borderDash:[],
+        borderDash: [],
         tension: 0.4,
-        stepped:false,
+        stepped: false,
       },
       {
         // normalized:true,
         // parsing:false,
-        indexAxis:"x",
+        indexAxis: "x",
         label: "Temperatura ",
         data: data.temperature,
         // [...data]
         //   .map((item, i) => ({x:item.date,y:+item.value}))
         //   .sort((a,b)=>a.x-b.x),
-          //.filter((item, i) => item.x%filter.offset === 0),
+        //.filter((item, i) => item.x%filter.offset === 0),
         fill: false,
         borderColor: "rgb(220,20,60)",
         borderWidth: 1,
-        borderDash:[],
+        borderDash: [],
         tension: 0.4,
-        stepped:false,
+        stepped: false,
       },
     ],
   };
 
   return (
     <div id="chart" className="mt-2 w-100 h-100">
-      <Line  options={options} data={dataSet}></Line>
+      <Line options={options} data={dataSet}></Line>
       <div className="d-flex justify-content-center gap-4 py-4  ">
         <button
           onClick={() => updateFilter(0)}

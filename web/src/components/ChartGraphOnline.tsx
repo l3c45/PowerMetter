@@ -25,11 +25,10 @@ ChartJS.register(
 );
 
 type Props = {
-  data:INIT[];
+  data: INIT[];
 };
 
 const ChartGraphOnline = ({ data }: Props) => {
- 
   const d: ChartData<"line"> = {
     datasets: [
       {

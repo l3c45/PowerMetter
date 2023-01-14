@@ -19,6 +19,7 @@ specifiers:
   chart.js: ^4.1.2
   chartjs-adapter-date-fns: ^3.0.0
   chartjs-plugin-streaming: 2.0.0
+  chartjs-plugin-zoom: ^2.0.0
   date-fns: ^2.29.3
   react: ^18.2.0
   react-chartjs-2: ^5.2.0
@@ -47,6 +48,7 @@ dependencies:
   chart.js: 4.1.2
   chartjs-adapter-date-fns: 3.0.0_kluv2ktejb2igagp3yc56zuwiy
   chartjs-plugin-streaming: 2.0.0_chart.js@4.1.2
+  chartjs-plugin-zoom: 2.0.0_chart.js@4.1.2
   date-fns: 2.29.3
   react: 18.2.0
   react-chartjs-2: 5.2.0_mfjxiilvrceiwtanada6fxhije
@@ -3631,6 +3633,15 @@ packages:
       chart.js: 4.1.2
     dev: false
 
+  /chartjs-plugin-zoom/2.0.0_chart.js@4.1.2:
+    resolution: {integrity: sha512-bqpi7DGy9a5hX7ThKl/xQaLzXvneSwhS0w/lNimZ8AJaoRVMKz5JfUoqwciJYV5ixKXJbgyvwC9HcJnyVsYmjg==}
+    peerDependencies:
+      chart.js: '>=3.2.0'
+    dependencies:
+      chart.js: 4.1.2
+      hammerjs: 2.0.8
+    dev: false
+
   /check-types/11.2.2:
     resolution: {integrity: sha512-HBiYvXvn9Z70Z88XKjz3AEKd4HJhBXsa3j7xFnITAzoS8+q6eIGi8qDB8FKPBAjtuxjI/zFpwuiCb8oDtKOYrA==}
     dev: false
@@ -5449,6 +5460,11 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       duplexer: 0.1.2
+    dev: false
+
+  /hammerjs/2.0.8:
+    resolution: {integrity: sha512-tSQXBXS/MWQOn/RKckawJ61vvsDpCom87JgxiYdGwHdOa0ht0vzUWDlfioofFCRU0L+6NGDt6XzbgoJvZkMeRQ==}
+    engines: {node: '>=0.8.0'}
     dev: false
 
   /handle-thing/2.0.1:
